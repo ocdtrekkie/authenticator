@@ -8,4 +8,4 @@ I have disabled the INTERNET permission, and with it the time sync feature which
 
 Google Authenticator is licensed under Apache 2.0, see COPYING for full text.
 
-The key icon, kev.svg, is modified from public domain. Source: http://thenounproject.com/term/key/655/
+The key icon, key.svg, is modified from public domain. Source: http://thenounproject.com/term/key/655/
