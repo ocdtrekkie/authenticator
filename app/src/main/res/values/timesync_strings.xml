@@ -22,7 +22,7 @@
 
   <!-- Summary of the preference screen to configure the correction of the app's internal time. -->
   <string name="timesync_preference_screen_summary">
-    Sync Authenticator\'s internal clock with Google servers
+    Adjust Authenticator\'s internal clock
   </string>
 
   <!-- Title of the preference to sync the app's internal time with Google. -->

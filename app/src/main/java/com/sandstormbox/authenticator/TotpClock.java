@@ -26,7 +26,7 @@ import android.preference.PreferenceManager;
  *
  * @author klyubin@google.com (Alex Klyubin)
  */
-public class TotpClock {
+public class TotpClock implements SharedPreferences.OnSharedPreferenceChangeListener {
 
   // @VisibleForTesting
   static final String PREFERENCE_KEY_OFFSET_MINUTES = "timeCorrectionMinutes";
@@ -45,6 +45,7 @@ public class TotpClock {
 
   public TotpClock(Context context) {
     mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    mPreferences.registerOnSharedPreferenceChangeListener(this);
   }
 
   /**
@@ -62,10 +63,21 @@ public class TotpClock {
   public int getTimeCorrectionMinutes() {
     synchronized (mLock) {
       if (mCachedCorrectionMinutes == null) {
-        mCachedCorrectionMinutes = mPreferences.getInt(PREFERENCE_KEY_OFFSET_MINUTES, 0);
+          try {
+             mCachedCorrectionMinutes = mPreferences.getInt(PREFERENCE_KEY_OFFSET_MINUTES, 0);
+           } catch(ClassCastException e) {
+              mCachedCorrectionMinutes = Integer.valueOf(mPreferences.getString(PREFERENCE_KEY_OFFSET_MINUTES, "0"));
+           }
       }
       return mCachedCorrectionMinutes;
     }
+  }
+
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+     if (key.equals(PREFERENCE_KEY_OFFSET_MINUTES)) {
+        // Invalidate the cache
+        mCachedCorrectionMinutes = null;
+     }
   }
 
   /**
